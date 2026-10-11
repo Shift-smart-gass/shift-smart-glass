@@ -114,13 +114,19 @@ header.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;backgroun
 /* CÓMO FUNCIONA */
 .how{display:grid;grid-template-columns:1fr 1fr;gap:clamp(28px,5vw,64px);align-items:center}
 @media(max-width:820px){.how{grid-template-columns:1fr}}
-.layers{display:grid;gap:var(--gap,10px);transition:gap .9s cubic-bezier(.2,.7,.2,1)}
-.layers.shut{--gap:1px}
-.layer{display:flex;justify-content:space-between;align-items:baseline;gap:14px;padding:13px 16px;border:1px solid var(--line2);border-radius:8px;background:linear-gradient(90deg,rgba(63,140,255,.1),rgba(63,140,255,.02));font-size:.95rem}
-.layer b{font-weight:400}
-.layer.glass{background:linear-gradient(90deg,rgba(255,255,255,.07),rgba(255,255,255,.02));border-style:dashed}
-.lgroup{font:500 .62rem/1 var(--mono);letter-spacing:.18em;text-transform:uppercase;color:var(--glow);margin:0 0 2px}
-.lgroup.base{color:var(--mute);margin-top:12px}
+/* PDLC: ilustración vectorial y etiquetas que conservan su tamaño en móvil. */
+.pdlc-figure{margin:0;min-width:0}
+.pdlc-art{display:block;width:100%;height:auto;overflow:visible}
+.pdlc-labels,.pdlc-detail{margin:0;padding:0;list-style:none;display:grid;gap:16px}
+.pdlc-labels li,.pdlc-detail li{position:relative;padding-left:32px}
+.pdlc-labels li::before,.pdlc-detail li::before{content:"";position:absolute;left:3px;top:12px;width:19px;height:1px;background:var(--glow)}
+.pdlc-labels li::after,.pdlc-detail li::after{content:"";position:absolute;left:0;top:9px;width:6px;height:6px;background:var(--glow);border-radius:50%}
+.pdlc-labels b{display:block;font-family:var(--display);font-size:.95rem;font-weight:400}
+.pdlc-labels p{color:var(--mute);font-size:.9rem;line-height:1.5;margin-top:4px}
+.pdlc-marker{display:inline-grid;place-items:center;width:20px;height:20px;border:1px solid var(--line2);border-radius:50%;font:400 11px var(--mono);color:var(--glow);margin-right:7px;vertical-align:2px}
+.pdlc-detail{margin:22px 0;padding:16px 0;border-block:1px solid var(--line);gap:8px;font-size:.85rem;color:var(--mute)}
+.pdlc-detail .pdlc-marker{width:18px;height:18px;font-size:10px}
+@media(max-width:420px){.pdlc-labels b{font-size:.9rem}.pdlc-labels p{font-size:.88rem}}
 .lnote{margin-top:14px;color:var(--mute);font-size:.88rem;max-width:52ch}
 .layer span{font:400 .72rem/1.3 var(--mono);color:var(--mute);letter-spacing:.04em;text-align:right;flex:none}
 .layer.core{border-color:var(--glow);background:linear-gradient(90deg,rgba(140,192,255,.3),rgba(63,140,255,.1));box-shadow:0 0 40px rgba(63,140,255,.25)}
@@ -372,15 +378,85 @@ footer{border-top:1px solid var(--line);padding-block:56px 40px;color:var(--mute
   <p class="lead">No hace falta cambiar el vidrio. El film se adhiere al que ya tenés y se conecta a un transformador pequeño de baja tensión.</p></div>
   <div class="how">
     <div class="rv">
-      <div class="layers shut" id="layers">
-        <p class="lgroup">Lo que pegamos encima</p>
-        <div class="layer"><b>Lámina con corriente</b><span>una de las dos caras</span></div>
-        <div class="layer core"><b>Cristal líquido</b><span>la capa que cambia</span></div>
-        <div class="layer"><b>Lámina con corriente</b><span>la otra cara</span></div>
-        <div class="layer"><b>Adhesivo transparente</b><span>pega el film al vidrio</span></div>
-        <p class="lgroup base">Lo que ya tenés</p>
-        <div class="layer glass"><b>Tu vidrio</b><span>no se reemplaza</span></div>
-      </div>
+      <figure class="pdlc-figure" id="layers" aria-label="Instalación de la lámina inteligente sobre vidrio existente">
+        <svg class="pdlc-art" viewBox="0 0 480 370" role="img" aria-labelledby="pdlc-title pdlc-desc">
+          <title id="pdlc-title">Vidrio existente, lámina PDLC y transformador conectados</title>
+          <desc id="pdlc-desc">El vidrio transparente lleva una lámina con una esquina despegada. Un cable azul la conecta al transformador. La ampliación circular muestra dos capas conductoras con cristal líquido entre ellas. Los indicadores 1, 2 y 3 identifican los componentes; A, B y C identifican las capas.</desc>
+          <defs>
+            <linearGradient id="pdlc-glass" x1="0" x2="1" y2="1"><stop stop-color="#b9ddff" stop-opacity=".22"/><stop offset=".45" stop-color="#3f8cff" stop-opacity=".03"/><stop offset="1" stop-color="#b9ddff" stop-opacity=".2"/></linearGradient>
+            <linearGradient id="pdlc-film" x1="0" x2="1"><stop stop-color="#d6e3f6" stop-opacity=".5"/><stop offset=".5" stop-color="#8cc0ff" stop-opacity=".13"/><stop offset="1" stop-color="#d6e3f6" stop-opacity=".38"/></linearGradient>
+            <linearGradient id="pdlc-fold" x1="0" y1="1" x2="1" y2="0"><stop stop-color="#e9effb" stop-opacity=".12"/><stop offset=".6" stop-color="#b9ddff" stop-opacity=".65"/><stop offset="1" stop-color="#f3f8ff" stop-opacity=".9"/></linearGradient>
+            <radialGradient id="pdlc-halo"><stop stop-color="#3f8cff" stop-opacity=".2"/><stop offset="1" stop-color="#3f8cff" stop-opacity="0"/></radialGradient>
+            <radialGradient id="pdlc-bead" cx=".3" cy=".2"><stop stop-color="#e9effb"/><stop offset=".4" stop-color="#8cc0ff"/><stop offset="1" stop-color="#173963"/></radialGradient>
+            <linearGradient id="pdlc-box" x2="1" y2="1"><stop stop-color="#35465e"/><stop offset="1" stop-color="#0b1830"/></linearGradient>
+            <filter id="pdlc-glow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="4"/></filter>
+            <clipPath id="pdlc-lens"><circle cx="339" cy="90" r="72"/></clipPath>
+          </defs>
+          <ellipse cx="230" cy="220" rx="220" ry="145" fill="url(#pdlc-halo)"/>
+          <path d="M79 323L243 352L342 325L173 298Z" fill="#3f8cff" opacity=".08"/>
+          <!-- Vidrio, canto y reflejos -->
+          <path d="M83 130L247 66L247 331L83 288Z" fill="url(#pdlc-glass)" stroke="#a6d5ff" stroke-width="1.4"/>
+          <path d="M247 66L253 69L253 334L247 331ZM83 288L247 331L253 334L89 291Z" fill="#8cc0ff" fill-opacity=".18" stroke="#8cc0ff" stroke-width=".7"/>
+          <path d="M100 133L132 120L132 297L100 288ZM186 99L197 95L197 317L186 314Z" fill="#e9effb" opacity=".06"/>
+          <path d="M87 132L243 71M86 285L244 326" stroke="#e9effb" stroke-opacity=".55"/>
+          <!-- Lámina adherida y esquina que se curva hacia afuera -->
+          <path d="M176 190Q174 168 195 145L235 104L292 91L292 340L176 309Z" fill="url(#pdlc-film)" stroke="#b9ddff" stroke-width="1.2"/>
+          <path d="M176 190Q177 165 197 145L235 104L292 91Q253 116 233 146Q212 171 176 190Z" fill="url(#pdlc-fold)" stroke="#d6e3f6" stroke-opacity=".7"/>
+          <path d="M292 91L297 94L297 342L292 340Z" fill="#3f8cff" fill-opacity=".5" stroke="#8cc0ff"/>
+          <!-- Cable y transformador -->
+          <path d="M297 216L327 210Q345 207 345 231L345 258Q345 275 365 273L387 273" fill="none" stroke="#3f8cff" stroke-width="8" filter="url(#pdlc-glow)"/>
+          <path d="M297 216L327 210Q345 207 345 231L345 258Q345 275 365 273L387 273" fill="none" stroke="#b9ddff" stroke-width="1.8"/>
+          <path d="M387 239L427 234L435 241L435 305L426 312L387 307Z" fill="url(#pdlc-box)" stroke="#8d9dbb" stroke-width=".8"/>
+          <path d="M426 235L426 312M430 239L430 308" stroke="#020611" stroke-width="2"/>
+          <circle cx="399" cy="295" r="2" fill="#8cc0ff"/>
+          <!-- Conexión óptica con la ampliación -->
+          <path d="M235 149L269 112M244 155L309 157" fill="none" stroke="#b9ddff" stroke-opacity=".65" stroke-width="1"/>
+          <circle cx="235" cy="151" r="12" fill="#8cc0ff" fill-opacity=".08" stroke="#b9ddff"/>
+          <circle cx="235" cy="151" r="2.5" fill="#e9effb"/>
+          <circle cx="339" cy="90" r="72" fill="#081226" stroke="#8cc0ff" stroke-width="1.8"/>
+          <g clip-path="url(#pdlc-lens)">
+            <path d="M273 52L338 35L389 62L321 83Z M273 112L338 95L389 122L321 146Z" fill="url(#pdlc-film)" stroke="#b9ddff" stroke-width="1.1"/>
+            <path d="M273 57L321 88L389 67M273 117L321 151L389 127" fill="none" stroke="#8cc0ff" stroke-width="2"/>
+            <g fill="url(#pdlc-bead)">
+              <ellipse cx="290" cy="79" rx="7" ry="8"/>
+              <ellipse cx="308" cy="82" rx="7" ry="8"/>
+              <ellipse cx="326" cy="85" rx="7" ry="8"/>
+              <ellipse cx="344" cy="88" rx="7" ry="8"/>
+              <ellipse cx="362" cy="91" rx="7" ry="8"/>
+              <ellipse cx="297" cy="93" rx="7" ry="8"/>
+              <ellipse cx="315" cy="96" rx="7" ry="8"/>
+              <ellipse cx="333" cy="99" rx="7" ry="8"/>
+              <ellipse cx="351" cy="102" rx="7" ry="8"/>
+              <ellipse cx="369" cy="105" rx="7" ry="8"/>
+              <ellipse cx="304" cy="107" rx="7" ry="8"/>
+              <ellipse cx="322" cy="110" rx="7" ry="8"/>
+              <ellipse cx="340" cy="113" rx="7" ry="8"/>
+              <ellipse cx="358" cy="116" rx="7" ry="8"/>
+              <ellipse cx="376" cy="119" rx="7" ry="8"/>
+            </g>
+          </g>
+          <!-- Líneas finas y puntos enlazan las claves con sus elementos -->
+          <g fill="none" stroke="#b9ddff" stroke-width="1">
+            <path d="M104 231L61 231L45 250"/><path d="M209 256L228 278L258 278"/><path d="M407 310L407 345L437 345"/>
+            <path d="M377 61L422 61L435 46"/><path d="M385 91L435 91"/><path d="M377 128L423 128L435 142"/>
+          </g>
+          <g fill="#e9effb"><circle cx="104" cy="231" r="3"/><circle cx="209" cy="256" r="3"/><circle cx="407" cy="310" r="3"/><circle cx="377" cy="61" r="2.5"/><circle cx="385" cy="91" r="2.5"/><circle cx="377" cy="128" r="2.5"/></g>
+          <g fill="#081226" stroke="#8cc0ff"><circle cx="40" cy="256" r="11"/><circle cx="270" cy="278" r="11"/><circle cx="449" cy="345" r="11"/><circle cx="446" cy="37" r="10"/><circle cx="446" cy="91" r="10"/><circle cx="446" cy="151" r="10"/></g>
+          <g fill="#b9ddff" font-family="var(--mono)" font-size="12" text-anchor="middle" dominant-baseline="central"><text x="40" y="256">1</text><text x="270" y="278">2</text><text x="449" y="345">3</text><text x="446" y="37">A</text><text x="446" y="91">B</text><text x="446" y="151">C</text></g>
+        </svg>
+        <figcaption>
+          <ul class="pdlc-labels">
+            <li><b><span class="pdlc-marker">1</span>Vidrio existente</b><p>Trabajamos sobre el vidrio que ya tenés. No se reemplaza.</p></li>
+            <li><b><span class="pdlc-marker">2</span>Lámina inteligente PDLC</b><p>Una única lámina de 0,38 mm que se adhiere con adhesivo óptico transparente.</p></li>
+            <li><b><span class="pdlc-marker">3</span>Transformador de baja tensión</b><p>Pequeño y discreto (36–60 V AC).</p></li>
+          </ul>
+          <ul class="pdlc-detail" aria-label="Capas de la ampliación circular">
+            <li><span class="pdlc-marker">A</span>Capa conductora transparente (PET).</li>
+            <li><span class="pdlc-marker">B</span>Cristal líquido (PDLC).</li>
+            <li><span class="pdlc-marker">C</span>Capa conductora transparente (PET).</li>
+          </ul>
+        </figcaption>
+      </figure>
       <p class="lnote">Todo esto junto es una sola lámina delgada. Las dos caras hacen pasar una corriente suave por el cristal líquido del medio, y eso es todo el mecanismo.</p>
       <div class="cell" id="cell" aria-hidden="true"></div>
       <div class="cell-cap"><span>Dentro del cristal líquido</span><b data-crystal-label>Alineados: la luz pasa</b></div>
